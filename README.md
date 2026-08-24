@@ -11,88 +11,143 @@ It provides a centralized dashboard for managing **Projects, Queues, Jobs, and W
 ## 🚧 Project Status
 
 > **Currently in development**
-
-### ✅ Completed
-
-- 🔐 JWT Authentication
-- 📁 Project Management
-- 📋 Queue Management
-- ⏸️ Queue Pause / Resume
-- 📝 Job Creation
-- 📊 Dashboard
-- 👷 Worker Monitoring
-- 🔄 Job Refresh
-- 🔁 Retry Configuration
-- ⏱️ Delayed / Scheduled Jobs
-- 🗑️ Project & Queue Management
-- 🌐 REST API
-- 🗄️ Prisma Database Integration
-
-### 🔨 In Progress
-
-- Distributed Worker Processing
-- Job Execution Engine
-- Job Locking
-- Retry Processing
-- Worker Heartbeats
-- Fault Tolerance
-- Advanced Scheduling
-- Real-time Monitoring
+> Core dashboard, auth, and CRUD APIs are complete. The distributed worker engine (job claiming, execution, retries, fault tolerance) is in progress.
 
 ---
 
-# ✨ Features
+## 🧩 Tech Stack
+
+| Layer | Stack |
+|---|---|
+| Frontend | React, TypeScript, Vite, Axios |
+| Backend | Node.js, Express, TypeScript, JWT |
+| Database | SQLite + Prisma ORM |
+| Tools | Git, Postman, VS Code |
+
+---
+
+## 🏗️ Architecture
+
+```
+React Dashboard → Axios → Express API → Auth Middleware → Controllers → Prisma → DB
+```
+
+**Planned (distributed processing):**
+
+```
+Dashboard → API → Job Queue / DB → Multiple Workers → Job Execution → Status Update
+```
+
+---
+
+## 📦 Core Concepts
+
+- **Project** — logical container for queues (e.g. `Email Processing`)
+- **Queue** — holds jobs; configurable priority, concurrency, retries; `ACTIVE` / `PAUSED`
+- **Job** — unit of work with payload, priority, status, attempts, schedule
+- **Worker** — claims and executes jobs; sends heartbeats; recovers from failure
+
+**Job Lifecycle**
+
+```
+QUEUED → RUNNING → COMPLETED
+                 ↘ FAILED → RETRY → RUNNING → ... → DEAD
+```
+
+---
+
+## 🖥️ Dashboard
+
+`Dashboard` · `Projects` · `Queues` · `Jobs` · `Workers`
+
+- Create/manage projects, queues, and jobs
+- Pause/resume queues
+- Track job status, priority, and attempts
+- Monitor workers
+
+---
 
 ## 🔐 Authentication
 
-- User registration and login
-- JWT-based authentication
-- Protected API routes
-- Automatic JWT token handling
-- Secure password handling
-- Logout
+JWT-based auth — login returns a token, stored client-side and auto-attached via Axios interceptor:
 
-## 📁 Project Management
+```
+Authorization: Bearer <token>
+```
 
-Users can:
+---
 
-- Create projects
-- View projects
-- Open projects
-- Delete projects
-- View project queues
+## 🔌 API Overview
 
-## 📋 Queue Management
+```
+/api/auth
+/api/projects
+/api/queues
+/api/jobs
+/api/workers
+/api/dashboard
+```
 
-Each project can contain multiple queues.
+```
+POST   /api/projects
+GET    /api/queues/project/:projectId
+POST   /api/queues/:id/pause
+POST   /api/jobs/queue/:queueId
+GET    /api/workers
+```
 
-Queue configuration includes:
+---
 
-- Queue name
-- Priority
-- Concurrency
-- Retry strategy
-- Maximum retries
-- Retry delay
-- Pause / Resume
+## 🗂️ Database
 
-## 📝 Job Management
+```
+User → Projects → Queues → Jobs
+```
 
-Jobs can be created inside queues with:
+Workers exist independently and interact with jobs/queues during processing.
 
-- Job name
-- JSON payload
-- Priority
-- Delay
-- Scheduled execution
-- Retry configuration
+---
 
-Jobs support states such as:
+## 🚀 Getting Started
 
-```text
-QUEUED
-SCHEDULED
-RUNNING
-COMPLETED
-FAILED
-DEAD
+```bash
+git clone https://github.com/<your-username>/taskflow.git
+cd taskflow
+
+# Backend
+cd backend && npm install
+npx prisma migrate dev && npx prisma generate
+npm run dev
+
+# Frontend (new terminal)
+cd frontend && npm install
+npm run dev
+```
+
+Frontend: `localhost:5173` · Backend: `localhost:5000`
+
+---
+
+## ✅ Completed
+
+Auth, Projects, Queues, Jobs CRUD · Pause/resume · Priority, payload, scheduling · Retry config · Dashboard stats · Worker info endpoint
+
+## 🔜 In Progress
+
+Worker service · Job claiming/locking · Job execution engine · Retry processing · Concurrency limits · Heartbeats & fault tolerance · Real-time monitoring (WebSockets)
+
+## 🗺️ Roadmap
+
+Redis queue backend · Worker auto-scaling · Docker Compose · Recurring jobs · Dead-letter queues · Metrics & monitoring
+
+---
+
+## 🎯 Goal
+
+Evolve TaskFlow from a job-management dashboard into a reliable **distributed job processing platform** — demonstrating concurrency, fault tolerance, scheduling, and worker coordination at scale.
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)
