@@ -38,6 +38,68 @@ It provides a centralized dashboard for managing **Projects, Queues, Jobs, and W
 
 ---
 
+## 📸 Screenshots
+
+### 🔐 1. Login
+
+User authentication screen for securely accessing TaskFlow.
+
+<p align="center">
+  <img src="screenshots/login.png" width="850"/>
+</p>
+
+---
+
+### 📊 2. Dashboard
+
+Central dashboard showing projects, queues, jobs, job statistics, and workers.
+
+<p align="center">
+  <img src="screenshots/dashboard.png" width="850"/>
+</p>
+
+---
+
+### 📁 3. Project Management
+
+Create, view, and manage projects and their associated queues.
+
+<p align="center">
+  <img src="screenshots/projects.png" width="850"/>
+</p>
+
+---
+
+### 📋 4. Queue Management
+
+View queues, configure processing settings, and manage queue states such as **Pause / Resume**.
+
+<p align="center">
+  <img src="screenshots/queues.png" width="850"/>
+</p>
+
+---
+
+### 📝 5. Job Management
+
+View and manage jobs created inside queues, including job status, priority, and attempts.
+
+<p align="center">
+  <img src="screenshots/jobs.png" width="850"/>
+</p>
+
+---
+
+### 👷 6. Worker Monitoring
+
+Monitor registered workers responsible for processing distributed jobs.
+
+<p align="center">
+  <img src="screenshots/workers.png" width="850"/>
+</p>
+
+---
+
 ## 🏗️ Architecture
 
 **Current (client-server):**
